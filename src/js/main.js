@@ -23,6 +23,7 @@ const loadtoDisplay = (task) => {
     card.className = 'card mt-2';
     card.draggable = true;
     card.id = task.id;
+    card.style.padding = '20px 0';
 
     card.innerHTML += `<h6 class="card-title">${task.title}</h6>
                         <p class="card-text">${task.description}</p>
@@ -32,7 +33,7 @@ const loadtoDisplay = (task) => {
     section.appendChild(card)
 }
 
-const extractTask = () => {
+const getDatafromLocal = () => {
     let data = localStorage.getItem('tasks');
     !data ? arr = [] : arr = JSON.parse(data)
 
@@ -40,48 +41,56 @@ const extractTask = () => {
         loadtoDisplay(task)
     })
 }
-extractTask()
+getDatafromLocal()
 
 window.addEventListener("DOMContentLoaded", () => {
     let data = localStorage.getItem('tasks');
     !data ? arr = [] : arr = JSON.parse(data)
     arr.forEach((task) => {
-        // console.log(task.id)
+        const droppable = document.getElementById('sections')
+        // console.log(section)
         const draggable = document.getElementById(task.id);
-        const droppable = document.getElementById(task.progress)
-        // console.log(droppable)
+
         draggable.addEventListener('dragstart', startHandler);
-        // draggable.addEventListener('dragend', endHandler)
+        draggable.addEventListener('dragend', dragendHandler)
         droppable.addEventListener("dragover", dragOverHandler);
         droppable.addEventListener("dragleave", dragLeaveHandler);
         droppable.addEventListener('drop', dropHandler)
     })
 
     function startHandler(event) {
+        event.currentTarget.classList.add("dragging")
         event.dataTransfer.clearData();
         event.dataTransfer.setData('text/plain', event.target.id);
-        // data.textContent = event.dataTransfer.getData("text/plain");
-        // console.log(event.dataTransfer.getData('text/plain'))
     }
-    // function endHandler(event) {
-    //     data.textContent = event.dataTransfer.getData('text/plain') || "empty";
-    //     if (dropped) {
-    //         draggable.removeEventListener("dragstart", startHandler);
-    //         draggable.removeEventListener("dragend", endHandler);
-    //     }
-    // }
+
+    function dragendHandler(event) {
+        event.target.classList.remove("dragging")
+    }
+
     function dragOverHandler(event) {
         event.preventDefault()
     }
+
     function dragLeaveHandler(event) {
         event.preventDefault();
     }
+
     function dropHandler(event) {
         event.preventDefault();
-        const data = event.dataTransfer.getData("text/plain")
-        const element = document.getElementById(data)
+        const id = event.dataTransfer.getData("text/plain")
+        const element = document.getElementById(id)
         // console.log(element)
         event.target.appendChild(element)
-    }
+        let tasks = localStorage.getItem('tasks')
+        !tasks ? alldata = [] : alldata = JSON.parse(tasks)
+        const dropid = event.target.id;
+        let findsingletask = alldata.find(onedata => onedata.id == id)
+        findsingletask.progress = dropid;
+        // alldata.push(findsingletask)
+        localStorage.setItem('tasks', JSON.stringify(alldata))
+        window.location = 'index.html'
+        // console.log(findsingletask)
 
+    }
 })

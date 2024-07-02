@@ -1,8 +1,19 @@
-.task-section {
-    background-color: rgb(161, 159, 159);
-    padding: 5px;
-}
-
 .task-section h5 {
     color: #fff;
+    background-color: teal;
+    text-align: center;
+    padding: 7px 0;
+}
+
+.task-section {
+    padding: 0px 2px 30px;
+    height: 450px;
+}
+
+.dragging {
+    background-color: rgb(224, 244, 244);
+}
+
+#sections {
+    overflow: scroll;
 }
