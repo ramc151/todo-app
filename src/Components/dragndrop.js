@@ -21,11 +21,8 @@ export function dropHandler(event) {
     const id = event.dataTransfer.getData("text/plain")
     const element = document.getElementById(id)
 
-    // let appendid = document.getElementById(event.target.id)
-    // console.log(event.target)
+    let appendid = event.target.closest('.task-section')
 
-    // appendid.appendChild(element)
-    let appendid = event.target.closest('.task-section').id
     event.target.closest('.task-section').appendChild(element)
 
     let tasks = localStorage.getItem('tasks')
@@ -33,11 +30,9 @@ export function dropHandler(event) {
     !tasks ? alldata = [] : alldata = JSON.parse(tasks)
 
     let findsingletask = alldata.find(onedata => onedata.id == id)
-    findsingletask.progress = appendid;
-    // console.log(findsingletask)
+    findsingletask.progress = appendid.id;
     localStorage.setItem('tasks', JSON.stringify(alldata))
 
-    // console.log(element)
-    element.querySelector('p b').nextSibling.textContent = appendid;
+    element.querySelector('p b').nextSibling.textContent = appendid.id;
 
 }
