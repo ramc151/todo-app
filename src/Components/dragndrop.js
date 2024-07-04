@@ -22,7 +22,6 @@ export function dropHandler(event) {
     const element = document.getElementById(id)
 
     let appendid = document.getElementById(event.target.id)
-    // console.log(typeof (appendid.id))
 
     appendid.appendChild(element)
 
