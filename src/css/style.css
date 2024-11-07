@@ -8,12 +8,10 @@
 .task-section {
     padding: 0px 5px 30px;
     height: 450px;
+    overflow: scroll;
+    scrollbar-width: none;
 }
 
 .dragging {
     background-color: rgb(224, 244, 244);
-}
-
-#sections {
-    overflow: scroll;
 }
