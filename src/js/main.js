@@ -29,7 +29,6 @@ window.addEventListener("DOMContentLoaded", () => {
     !data ? arr = [] : arr = JSON.parse(data)
     arr.forEach((task) => {
         const droppable = document.getElementById('sections')
-        // console.log(droppable)
         const draggable = document.getElementById(task.id);
 
         draggable.addEventListener('dragstart', startHandler);
